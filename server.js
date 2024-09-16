@@ -1,3 +1,4 @@
+// server.js
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
@@ -5,7 +6,7 @@ const cors = require('cors');
 const materialRoutes = require('./routes/materialRoutes');
 const requestRoutes = require('./routes/requestRoutes');
 const authRoutes = require('./routes/authRoutes');
-const userRoutes = require('./routes/userRoutes');
+const userRoutes = require('./routes/userRoutes'); // Import userRoutes
 
 dotenv.config();
 connectDB();
@@ -13,18 +14,19 @@ connectDB();
 const app = express();
 
 app.use(cors({
-    origin: '*' // Adjust as needed
+    origin: ['http://localhost:3000', 'issuance-app-portal-pbkb45hu2-zeerak-noumans-projects.vercel.app'] // Allow requests from this origin
 }));
 
 app.use(express.json());
 
+// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/requests', requestRoutes);
 app.use('/api/materials', materialRoutes);
-app.use('/api/users', userRoutes);
+app.use('/api/users', userRoutes); // Add userRoutes here
 
-app.get('/', (req, res) => {
-    res.send('Backend is running');
-});
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 module.exports = app;
