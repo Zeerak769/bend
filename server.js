@@ -14,10 +14,8 @@ const app = express();
 
 // Configure CORS to allow requests from specific origins
 app.use(cors({
-    origin: 'https://issuanceportalapp.vercel.app', // Replace with your frontend domain
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    credentials: true,
-  }));
+    origin: ['*']
+}));
 
 app.use(express.json());
 
